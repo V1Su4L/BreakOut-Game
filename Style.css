@@ -1,0 +1,38 @@
+h1
+{
+    background-color: blue;
+    text-align: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: white;
+}
+
+.grid
+{
+    position: absolute;
+    border: 1px solid black;
+    height: 300px;
+    width: 560px;
+    margin-top: 150px;
+    margin-left: 680px;
+}
+
+.block
+{
+    position: absolute;
+    background-color: blue;
+}
+
+.user
+{
+    position: absolute;
+    background-color:red;
+}
+
+.ball
+{
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    background-color: black;
+}
