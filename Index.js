@@ -21,10 +21,10 @@ let yDirection = 2
 //Block Class
 class Block
 {
-    constructor(x,y)
+    constructor(height,width)
     {
-        this.x = x 
-        this.y = y       
+        this.height = height 
+        this.width = width       
     }
 }
 
@@ -55,8 +55,8 @@ function addBlock()
     {
         const block = document.createElement('div')
         block.classList.add('block')
-        block.style.right = blocks[i].x + 'px'
-        block.style.bottom = blocks[i].y + 'px'
+        block.style.right = blocks[i].height + 'px'
+        block.style.bottom = blocks[i].width + 'px'
         block.style.width = blockWidth + 'px'
         block.style.height = blockHeight + 'px'
         var r = Math.floor(Math.random() * 256)
@@ -64,8 +64,8 @@ function addBlock()
         var b = Math.floor(Math.random() * 256)
         var bgColor = "rgb(" + r + "," + g + "," + b + ")"; 
         block.style.background = bgColor
-        grid.appendChild(block)
         console.log(blocks[i])
+        grid.appendChild(block)
     }
 } 
 addBlock()
@@ -104,6 +104,7 @@ function moveBall()
     ballCurrentPosition[0] += xDirection
     ballCurrentPosition[1] += yDirection
     drawBall()
+    checkForCollisions()
 }
 
 timerId = setInterval(moveBall, 30)
@@ -133,6 +134,49 @@ function moveUser(e)
 
 document.addEventListener('keydown', moveUser)
 
+
+//Check Collisions
+function checkForCollisions()
+{
+    //Wall Colisions
+    if(
+        ballCurrentPosition[0] >= (boardWidth - ballDiameter) || 
+        ballCurrentPosition[1] >= (boardHight - ballDiameter) ||
+        ballCurrentPosition[0] <= 0
+        )
+
+        {
+            changeDirection()
+        }
+    //User Collisions
+    if(
+        (ballCurrentPosition[0] > currentPosition[0] && ballCurrentPosition[0] < currentPosition[0] + blockWidth) &&
+        (ballCurrentPosition[1] > currentPosition[1] && ballCurrentPosition[1] < currentPosition[1] + blockHeight)
+    )
+    {
+        changeDirection()
+    }
+    //Block Collision
+    if(
+        (ballCurrentPosition[0] > blocks[i].height && ballCurrentPosition[0] > blocks[i].width) &&
+        ((ballCurrentPosition[1] + ballDiameter) > blocks.height && ballCurrentPosition[1] < blocks[i].width)
+    )
+    {
+        const allBlocks = Array.from(document.querySelectorAll(".block"))
+        allBlocks[i].classList.remove('block')
+        blocks.splice(i, 1)
+        changeDirection()
+        console.log("Test1")
+    }
+
+     //Check for Game Over
+     if(ballCurrentPosition[1] <= 0)
+     {
+         clearInterval(timerId)
+         console.log("Game Over")
+     }
+}
+
 //Change Direction
 function changeDirection()
 {
@@ -156,25 +200,4 @@ function changeDirection()
         xDirection = 2
         return
     }
-}
-
-//Check Collisions
-function CheckForCollisions()
-{
-    //Wall Colisions
-    if(ballCurrentPosition >= (boardWidth - ballDiameter))
-        {
-            changeDirection()
-            console.log("Changed Direction")
-        }
-}
-
-//Change Direction Function
-function changeDirection()
-{
-    if(xDirection === 2 && yDirection == 2)
-    {
-        yDirection = -2
-        return
-    }   
 }
