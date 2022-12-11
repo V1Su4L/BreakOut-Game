@@ -8,12 +8,12 @@ h1
 
 .grid
 {
-    position: absolute;
+    position: absolute; 
     border: 1px solid black;
     height: 300px;
     width: 560px;
-    margin-top: 150px;
-    margin-left: 680px;
+    margin-right: auto;
+    margin-left: auto; 
 }
 
 .block
